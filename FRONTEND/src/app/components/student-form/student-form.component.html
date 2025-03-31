@@ -1,0 +1,474 @@
+<div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h3>{{ isUpdateMode ? 'Update Student Information' : 'Student Registration Form' }}</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="studentForm" (ngSubmit)="previewForm()">
+          
+          <!-- Basic Details Section -->
+          <div class="card mb-4">
+            <div class="card-header bg-light">
+              <h4>Basic Details</h4>
+            </div>
+            <div class="card-body" formGroupName="basic">
+              <div class="row mb-3">
+                <div class="col-md-2">
+                  <label for="salutation" class="form-label">Salutation <span class="text-danger">*</span></label>
+                  <select id="salutation" class="form-select" formControlName="salutation">
+                    <option *ngFor="let salutation of salutations" [value]="salutation">{{ salutation }}</option>
+                  </select>
+                  <div *ngIf="basic.get('salutation')?.invalid && (basic.get('salutation')?.dirty || basic.get('salutation')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('salutation')?.errors?.['required']">Salutation is required.</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                  <input type="text" id="firstName" class="form-control" formControlName="firstName" placeholder="First Name">
+                  <div *ngIf="basic.get('firstName')?.invalid && (basic.get('firstName')?.dirty || basic.get('firstName')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('firstName')?.errors?.['required']">First name is required.</small>
+                    <small *ngIf="basic.get('firstName')?.errors?.['pattern']">First name must contain only letters.</small>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="middleName" class="form-label">Middle Name</label>
+                  <input type="text" id="middleName" class="form-control" formControlName="middleName" placeholder="Middle Name">
+                  <div *ngIf="basic.get('middleName')?.invalid && (basic.get('middleName')?.dirty || basic.get('middleName')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('middleName')?.errors?.['pattern']">Middle name must contain only letters.</small>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" id="lastName" class="form-control" formControlName="lastName" placeholder="Last Name">
+                  <div *ngIf="basic.get('lastName')?.invalid && (basic.get('lastName')?.dirty || basic.get('lastName')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('lastName')?.errors?.['required']">Last name is required.</small>
+                    <small *ngIf="basic.get('lastName')?.errors?.['pattern']">Last name must contain only letters.</small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="dob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                  <input type="date" id="dob" class="form-control" formControlName="dateOfBirth">
+                  <div *ngIf="basic.get('dateOfBirth')?.invalid && (basic.get('dateOfBirth')?.dirty || basic.get('dateOfBirth')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('dateOfBirth')?.errors?.['required']">Date of birth is required.</small>
+                    <small *ngIf="basic.get('dateOfBirth')?.errors?.['futureDate']">Date of birth must be in the past.</small>
+                  </div>
+                </div>
+                
+                <div class="col-md-4">
+                  <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                  <select id="gender" class="form-select" formControlName="gender">
+                    <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+                  </select>
+                  <div *ngIf="basic.get('gender')?.invalid && (basic.get('gender')?.dirty || basic.get('gender')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('gender')?.errors?.['required']">Gender is required.</small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-2">
+                  <label for="countryCode" class="form-label">Country Code <span class="text-danger">*</span></label>
+                  <select id="countryCode" class="form-select" formControlName="countryCode">
+                    <option *ngFor="let code of countryCodes" [value]="code">{{ code }}</option>
+                  </select>
+                  <div *ngIf="basic.get('countryCode')?.invalid && (basic.get('countryCode')?.dirty || basic.get('countryCode')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('countryCode')?.errors?.['required']">Country code is required.</small>
+                  </div>
+                </div>
+                
+                <div class="col-md-4">
+                  <label for="phoneNumber" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                  <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" placeholder="10-digit phone number">
+                  <div *ngIf="basic.get('phoneNumber')?.invalid && (basic.get('phoneNumber')?.dirty || basic.get('phoneNumber')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('phoneNumber')?.errors?.['required']">Phone number is required.</small>
+                    <small *ngIf="basic.get('phoneNumber')?.errors?.['pattern']">Phone number must be 10 digits.</small>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email ID <span class="text-danger">*</span></label>
+                  <input type="email" id="email" class="form-control" formControlName="email" placeholder="Email address">
+                  <div *ngIf="basic.get('email')?.invalid && (basic.get('email')?.dirty || basic.get('email')?.touched)" class="text-danger">
+                    <small *ngIf="basic.get('email')?.errors?.['required']">Email is required.</small>
+                    <small *ngIf="basic.get('email')?.errors?.['email']">Invalid email format.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Current Address Section -->
+          <div class="card mb-4">
+            <div class="card-header bg-light">
+              <h4>Current Address</h4>
+            </div>
+            <div class="card-body" formGroupName="currentAddress">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="currentAddressLine1" class="form-label">Address Line 1 <span class="text-danger">*</span></label>
+                    <input type="text" id="currentAddressLine1" class="form-control" formControlName="addressLine1" placeholder="House/Flat No, Building Name">
+                    <div *ngIf="currentAddress.get('addressLine1')?.invalid && (currentAddress.get('addressLine1')?.dirty || currentAddress.get('addressLine1')?.touched)" class="text-danger">
+                      <small *ngIf="currentAddress.get('addressLine1')?.errors?.['required']">Address Line 1 is required.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="currentAddressLine2" class="form-label">Address Line 2</label>
+                    <input type="text" id="currentAddressLine2" class="form-control" formControlName="addressLine2" placeholder="Street, Area">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="currentLandmark" class="form-label">Landmark</label>
+                    <input type="text" id="currentLandmark" class="form-control" formControlName="landmark" placeholder="Landmark">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="currentPinCode" class="form-label">Pin Code <span class="text-danger">*</span></label>
+                    <input type="text" id="currentPinCode" class="form-control" formControlName="pinCode" placeholder="Pin Code">
+                    <div *ngIf="currentAddress.get('pinCode')?.invalid && (currentAddress.get('pinCode')?.dirty || currentAddress.get('pinCode')?.touched)" class="text-danger">
+                      <small *ngIf="currentAddress.get('pinCode')?.errors?.['required']">Pin Code is required.</small>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <label for="currentState" class="form-label">State <span class="text-danger">*</span></label>
+                    <select id="currentState" class="form-select" formControlName="state">
+                      <option value="">Select State</option>
+                      <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+                    </select>
+                    <div *ngIf="currentAddress.get('state')?.invalid && (currentAddress.get('state')?.dirty || currentAddress.get('state')?.touched)" class="text-danger">
+                      <small *ngIf="currentAddress.get('state')?.errors?.['required']">State is required.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <label for="currentDistrict" class="form-label">District <span class="text-danger">*</span></label>
+                    <select id="currentDistrict" class="form-select" formControlName="district" [disabled]="!currentAddress.get('state')?.value">
+                      <option value="">Select District</option>
+                      <option *ngFor="let district of districts" [value]="district.id">{{ district.name }}</option>
+                    </select>
+                    <div *ngIf="currentAddress.get('district')?.invalid && (currentAddress.get('district')?.dirty || currentAddress.get('district')?.touched)" class="text-danger">
+                      <small *ngIf="currentAddress.get('district')?.errors?.['required']">District is required.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <label for="currentBlock" class="form-label">Block <span class="text-danger">*</span></label>
+                    <select id="currentBlock" class="form-select" formControlName="block" [disabled]="!currentAddress.get('district')?.value">
+                      <option value="">Select Block</option>
+                      <option *ngFor="let block of blocks" [value]="block.id">{{ block.name }}</option>
+                    </select>
+                    <div *ngIf="currentAddress.get('block')?.invalid && (currentAddress.get('block')?.dirty || currentAddress.get('block')?.touched)" class="text-danger">
+                      <small *ngIf="currentAddress.get('block')?.errors?.['required']">Block is required.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Address Copy Option -->
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="sameAsCurrentAddress" formControlName="sameAsCurrentAddress">
+              <label class="form-check-label" for="sameAsCurrentAddress">
+                Same as Current Address
+              </label>
+            </div>
+            
+            <!-- Permanent Address Section -->
+            <div class="card mb-4">
+              <div class="card-header bg-light">
+                <h4>Permanent Address</h4>
+              </div>
+              <div class="card-body" formGroupName="permanentAddress">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="permanentAddressLine1" class="form-label">Address Line 1 <span class="text-danger">*</span></label>
+                    <input type="text" id="permanentAddressLine1" class="form-control" formControlName="addressLine1" placeholder="House/Flat No, Building Name">
+                    <div *ngIf="permanentAddress.get('addressLine1')?.invalid && (permanentAddress.get('addressLine1')?.dirty || permanentAddress.get('addressLine1')?.touched)" class="text-danger">
+                      <small *ngIf="permanentAddress.get('addressLine1')?.errors?.['required']">Address Line 1 is required.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="permanentAddressLine2" class="form-label">Address Line 2</label>
+                    <input type="text" id="permanentAddressLine2" class="form-control" formControlName="addressLine2" placeholder="Street, Area">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="permanentLandmark" class="form-label">Landmark</label>
+                    <input type="text" id="permanentLandmark" class="form-control" formControlName="landmark" placeholder="Landmark">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="permanentPinCode" class="form-label">Pin Code <span class="text-danger">*</span></label>
+                    <input type="text" id="permanentPinCode" class="form-control" formControlName="pinCode" placeholder="Pin Code">
+                    <div *ngIf="permanentAddress.get('pinCode')?.invalid && (permanentAddress.get('pinCode')?.dirty || permanentAddress.get('pinCode')?.touched)" class="text-danger">
+                      <small *ngIf="permanentAddress.get('pinCode')?.errors?.['required']">Pin Code is required.</small>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <label for="permanentState" class="form-label">State <span class="text-danger">*</span></label>
+                    <select id="permanentState" class="form-select" formControlName="state">
+                      <option value="">Select State</option>
+                      <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+                    </select>
+                    <div *ngIf="permanentAddress.get('state')?.invalid && (permanentAddress.get('state')?.dirty || permanentAddress.get('state')?.touched)" class="text-danger">
+                      <small *ngIf="permanentAddress.get('state')?.errors?.['required']">State is required.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <label for="permanentDistrict" class="form-label">District <span class="text-danger">*</span></label>
+                    <select id="permanentDistrict" class="form-select" formControlName="district" [disabled]="!permanentAddress.get('state')?.value">
+                      <option value="">Select District</option>
+                      <option *ngFor="let district of districts" [value]="district.id">{{ district.name }}</option>
+                    </select>
+                    <div *ngIf="permanentAddress.get('district')?.invalid && (permanentAddress.get('district')?.dirty || permanentAddress.get('district')?.touched)" class="text-danger">
+                      <small *ngIf="permanentAddress.get('district')?.errors?.['required']">District is required.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <label for="permanentBlock" class="form-label">Block <span class="text-danger">*</span></label>
+                    <select id="permanentBlock" class="form-select" formControlName="block" [disabled]="!permanentAddress.get('district')?.value">
+                      <option value="">Select Block</option>
+                      <option *ngFor="let block of blocks" [value]="block.id">{{ block.name }}</option>
+                    </select>
+                    <div *ngIf="permanentAddress.get('block')?.invalid && (permanentAddress.get('block')?.dirty || permanentAddress.get('block')?.touched)" class="text-danger">
+                      <small *ngIf="permanentAddress.get('block')?.errors?.['required']">Block is required.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- File Upload Section -->
+            <div class="card mb-4">
+              <div class="card-header bg-light">
+                <h4>Document Upload</h4>
+              </div>
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <label for="profilePicture" class="form-label">Profile Picture (JPG/JPEG, max 1MB) <span class="text-danger">*</span></label>
+                    <input type="file" id="profilePicture" class="form-control" (change)="onProfilePictureChange($event)" accept=".jpg,.jpeg">
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <label for="resume" class="form-label">Resume (PDF, max 50KB) <span class="text-danger">*</span></label>
+                    <input type="file" id="resume" class="form-control" (change)="onResumeChange($event)" accept=".pdf">
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <label for="signature" class="form-label">Signature (JPG/JPEG, max 70KB) <span class="text-danger">*</span></label>
+                    <input type="file" id="signature" class="form-control" (change)="onSignatureChange($event)" accept=".jpg,.jpeg">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Academic Details Section -->
+            <div class="card mb-4">
+              <div class="card-header bg-light">
+                <h4>Academic Details</h4>
+              </div>
+              <div class="card-body">
+                
+                <!-- 10th Details -->
+                <div class="card mb-3">
+                  <div class="card-header">10th Standard</div>
+                  <div class="card-body" formGroupName="academic">
+                    <div formGroupName="tenthDetails">
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label for="tenthBoard" class="form-label">Board/University <span class="text-danger">*</span></label>
+                          <input type="text" id="tenthBoard" class="form-control" formControlName="boardUniversity" placeholder="Board/University">
+                          <div *ngIf="tenthDetails.get('boardUniversity')?.invalid && (tenthDetails.get('boardUniversity')?.dirty || tenthDetails.get('boardUniversity')?.touched)" class="text-danger">
+                            <small *ngIf="tenthDetails.get('boardUniversity')?.errors?.['required']">Board/University is required.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <label for="tenthStream" class="form-label">Stream</label>
+                          <input type="text" id="tenthStream" class="form-control" formControlName="stream" placeholder="Stream">
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-4">
+                          <label for="tenthTotalMarks" class="form-label">Total Marks <span class="text-danger">*</span></label>
+                          <input type="number" id="tenthTotalMarks" class="form-control" formControlName="totalMarks" min="0" (change)="onTotalOrObtainedMarksChange('10th')">
+                          <div *ngIf="tenthDetails.get('totalMarks')?.invalid && (tenthDetails.get('totalMarks')?.dirty || tenthDetails.get('totalMarks')?.touched)" class="text-danger">
+                            <small *ngIf="tenthDetails.get('totalMarks')?.errors?.['required']">Total marks is required.</small>
+                            <small *ngIf="tenthDetails.get('totalMarks')?.errors?.['min']">Total marks must be positive.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <label for="tenthObtainedMarks" class="form-label">Obtained Marks <span class="text-danger">*</span></label>
+                          <input type="number" id="tenthObtainedMarks" class="form-control" formControlName="obtainedMarks" min="0" (change)="onTotalOrObtainedMarksChange('10th')">
+                          <div *ngIf="tenthDetails.get('obtainedMarks')?.invalid && (tenthDetails.get('obtainedMarks')?.dirty || tenthDetails.get('obtainedMarks')?.touched)" class="text-danger">
+                            <small *ngIf="tenthDetails.get('obtainedMarks')?.errors?.['required']">Obtained marks is required.</small>
+                            <small *ngIf="tenthDetails.get('obtainedMarks')?.errors?.['min']">Obtained marks must be positive.</small>
+                            <small *ngIf="tenthDetails.get('obtainedMarks')?.errors?.['exceedsTotal']">Obtained marks cannot exceed total marks.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <label for="tenthPercentage" class="form-label">Percentage</label>
+                          <input type="text" id="tenthPercentage" class="form-control" formControlName="percentage" readonly>
+                        </div>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="marksheet10th" class="form-label">10th Marksheet (PDF, max 50KB) <span class="text-danger">*</span></label>
+                        <input type="file" id="marksheet10th" class="form-control" (change)="onMarksheet10thChange($event)" accept=".pdf">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 12th Details -->
+                <div class="card mb-3">
+                  <div class="card-header">12th Standard</div>
+                  <div class="card-body" formGroupName="academic">
+                    <div formGroupName="twelfthDetails">
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label for="twelfthBoard" class="form-label">Board/University <span class="text-danger">*</span></label>
+                          <input type="text" id="twelfthBoard" class="form-control" formControlName="boardUniversity" placeholder="Board/University">
+                          <div *ngIf="twelfthDetails.get('boardUniversity')?.invalid && (twelfthDetails.get('boardUniversity')?.dirty || twelfthDetails.get('boardUniversity')?.touched)" class="text-danger">
+                            <small *ngIf="twelfthDetails.get('boardUniversity')?.errors?.['required']">Board/University is required.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <label for="twelfthStream" class="form-label">Stream</label>
+                          <input type="text" id="twelfthStream" class="form-control" formControlName="stream" placeholder="Stream">
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-4">
+                          <label for="twelfthTotalMarks" class="form-label">Total Marks <span class="text-danger">*</span></label>
+                          <input type="number" id="twelfthTotalMarks" class="form-control" formControlName="totalMarks" min="0" (change)="onTotalOrObtainedMarksChange('12th')">
+                          <div *ngIf="twelfthDetails.get('totalMarks')?.invalid && (twelfthDetails.get('totalMarks')?.dirty || twelfthDetails.get('totalMarks')?.touched)" class="text-danger">
+                            <small *ngIf="twelfthDetails.get('totalMarks')?.errors?.['required']">Total marks is required.</small>
+                            <small *ngIf="twelfthDetails.get('totalMarks')?.errors?.['min']">Total marks must be positive.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <label for="twelfthObtainedMarks" class="form-label">Obtained Marks <span class="text-danger">*</span></label>
+                          <input type="number" id="twelfthObtainedMarks" class="form-control" formControlName="obtainedMarks" min="0" (change)="onTotalOrObtainedMarksChange('12th')">
+                          <div *ngIf="twelfthDetails.get('obtainedMarks')?.invalid && (twelfthDetails.get('obtainedMarks')?.dirty || twelfthDetails.get('obtainedMarks')?.touched)" class="text-danger">
+                            <small *ngIf="twelfthDetails.get('obtainedMarks')?.errors?.['required']">Obtained marks is required.</small>
+                            <small *ngIf="twelfthDetails.get('obtainedMarks')?.errors?.['min']">Obtained marks must be positive.</small>
+                            <small *ngIf="twelfthDetails.get('obtainedMarks')?.errors?.['exceedsTotal']">Obtained marks cannot exceed total marks.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <label for="twelfthPercentage" class="form-label">Percentage</label>
+                          <input type="text" id="twelfthPercentage" class="form-control" formControlName="percentage" readonly>
+                        </div>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="marksheet12th" class="form-label">12th Marksheet (PDF, max 50KB) <span class="text-danger">*</span></label>
+                        <input type="file" id="marksheet12th" class="form-control" (change)="onMarksheet12thChange($event)" accept=".pdf">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Graduation Details -->
+                <div class="card mb-3">
+                  <div class="card-header">Graduation</div>
+                  <div class="card-body" formGroupName="academic">
+                    <div formGroupName="graduationDetails">
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label for="graduationBoard" class="form-label">University <span class="text-danger">*</span></label>
+                          <input type="text" id="graduationBoard" class="form-control" formControlName="boardUniversity" placeholder="University">
+                          <div *ngIf="graduationDetails.get('boardUniversity')?.invalid && (graduationDetails.get('boardUniversity')?.dirty || graduationDetails.get('boardUniversity')?.touched)" class="text-danger">
+                            <small *ngIf="graduationDetails.get('boardUniversity')?.errors?.['required']">University is required.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <label for="graduationStream" class="form-label">Stream</label>
+                          <input type="text" id="graduationStream" class="form-control" formControlName="stream" placeholder="Stream">
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-4">
+                          <label for="graduationTotalMarks" class="form-label">Total Marks <span class="text-danger">*</span></label>
+                          <input type="number" id="graduationTotalMarks" class="form-control" formControlName="totalMarks" min="0" (change)="onTotalOrObtainedMarksChange('graduation')">
+                          <div *ngIf="graduationDetails.get('totalMarks')?.invalid && (graduationDetails.get('totalMarks')?.dirty || graduationDetails.get('totalMarks')?.touched)" class="text-danger">
+                            <small *ngIf="graduationDetails.get('totalMarks')?.errors?.['required']">Total marks is required.</small>
+                            <small *ngIf="graduationDetails.get('totalMarks')?.errors?.['min']">Total marks must be positive.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <label for="graduationObtainedMarks" class="form-label">Obtained Marks <span class="text-danger">*</span></label>
+                          <input type="number" id="graduationObtainedMarks" class="form-control" formControlName="obtainedMarks" min="0" (change)="onTotalOrObtainedMarksChange('graduation')">
+                          <div *ngIf="graduationDetails.get('obtainedMarks')?.invalid && (graduationDetails.get('obtainedMarks')?.dirty || graduationDetails.get('obtainedMarks')?.touched)" class="text-danger">
+                            <small *ngIf="graduationDetails.get('obtainedMarks')?.errors?.['required']">Obtained marks is required.</small>
+                            <small *ngIf="graduationDetails.get('obtainedMarks')?.errors?.['min']">Obtained marks must be positive.</small>
+                            <small *ngIf="graduationDetails.get('obtainedMarks')?.errors?.['exceedsTotal']">Obtained marks cannot exceed total marks.</small>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <label for="graduationPercentage" class="form-label">Percentage</label>
+                          <input type="text" id="graduationPercentage" class="form-control" formControlName="percentage" readonly>
+                        </div>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="marksheetGraduation" class="form-label">Graduation Marksheet (PDF, max 50KB) <span class="text-danger">*</span></label>
+                        <input type="file" id="marksheetGraduation" class="form-control" (change)="onMarksheetGraduationChange($event)" accept=".pdf">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Validation Errors -->
+            <div *ngIf="validationErrors.length > 0" class="alert alert-danger">
+              <h5>Please correct the following errors:</h5>
+              <ul>
+                <li *ngFor="let error of validationErrors">{{ error }}</li>
+              </ul>
+            </div>
+            
+            <!-- Form Buttons -->
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-secondary" (click)="clearForm()">Clear</button>
+              <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+                {{ isUpdateMode ? 'Update' : 'Preview' }}
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Student List will be shown in a separate component -->
+    </div>

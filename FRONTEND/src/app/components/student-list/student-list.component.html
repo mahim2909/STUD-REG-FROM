@@ -1,0 +1,46 @@
+<!-- src/app/components/student-list/student-list.component.html -->
+<div class="student-list-container">
+    <h2>Registered Students</h2>
+
+    <div *ngIf="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading student data...</p>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+        {{ error }}
+    </div>
+
+    <div *ngIf="!loading && !error" class="table-responsive">
+        <table *ngIf="students.length > 0" class="student-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Salutation</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of students">
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.salutation }}</td>
+                    <td>{{ student.firstName }} {{ student.middleName ? student.middleName + ' ' : '' }}{{
+                        student.lastName }}</td>
+                    <td>{{ student.countryCode }} {{ student.phoneNumber }}</td>
+                    <td>{{ student.email }}</td>
+                    <td class="action-buttons">
+                        <button class="update-btn" (click)="onUpdate(student.id)">Update</button>
+                        <button class="delete-btn" (click)="onDelete(student.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="students.length === 0" class="no-records">
+            <p>No student records found.</p>
+        </div>
+    </div>
+</div>
