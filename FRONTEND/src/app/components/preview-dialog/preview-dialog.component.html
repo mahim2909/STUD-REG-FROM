@@ -1,0 +1,92 @@
+<!-- src/app/components/preview-dialog/preview-dialog.component.html -->
+<div class="preview-dialog" *ngIf="isVisible">
+    <div class="preview-content">
+      <h2>Registration Preview</h2>
+      
+      <div class="section">
+        <h3>Basic Details</h3>
+        <div class="preview-row">
+          <span class="label">Name:</span>
+          <span class="value">{{ student.salutation }} {{ student.firstName }} {{ student.middleName ? student.middleName : '' }} {{ student.lastName }}</span>
+        </div>
+        <div class="preview-row">
+          <span class="label">Date of Birth:</span>
+          <span class="value">{{ student.dob | date:'mediumDate' }}</span>
+        </div>
+        <div class="preview-row">
+          <span class="label">Gender:</span>
+          <span class="value">{{ student.gender }}</span>
+        </div>
+        <div class="preview-row">
+          <span class="label">Phone Number:</span>
+          <span class="value">{{ student.countryCode }} {{ student.phoneNumber }}</span>
+        </div>
+        <div class="preview-row">
+          <span class="label">Email:</span>
+          <span class="value">{{ student.email }}</span>
+        </div>
+        
+        <div class="preview-row">
+          <span class="label">Current Address:</span>
+          <span class="value">
+            {{ student.currentAddressLine1 }}, 
+            {{ student.currentAddressLine2 ? student.currentAddressLine2 + ',' : '' }}
+            {{ student.currentLandmark ? 'Landmark: ' + student.currentLandmark + ',' : '' }}
+            {{ student.currentBlock }}, {{ student.currentDistrict }}, {{ student.currentState }}, 
+            Pin: {{ student.currentPinCode }}
+          </span>
+        </div>
+        
+        <div class="preview-row">
+          <span class="label">Permanent Address:</span>
+          <span class="value">
+            {{ student.permanentAddressLine1 }}, 
+            {{ student.permanentAddressLine2 ? student.permanentAddressLine2 + ',' : '' }}
+            {{ student.permanentLandmark ? 'Landmark: ' + student.permanentLandmark + ',' : '' }}
+            {{ student.permanentBlock }}, {{ student.permanentDistrict }}, {{ student.permanentState }}, 
+            Pin: {{ student.permanentPinCode }}
+          </span>
+        </div>
+        
+        <div class="preview-row">
+          <span class="label">Files:</span>
+          <span class="value">
+            Profile Picture, Resume and Signature uploaded
+          </span>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h3>Academic Details</h3>
+        
+        <div class="preview-row">
+          <span class="label">10th:</span>
+          <span class="value">
+            Board/University: {{ student.tenthBoard }}, Stream: {{ student.tenthStream }},
+            Marks: {{ student.tenthObtainedMarks }}/{{ student.tenthTotalMarks }} ({{ (student.tenthObtainedMarks / student.tenthTotalMarks * 100).toFixed(2) }}%)
+          </span>
+        </div>
+        
+        <div class="preview-row">
+          <span class="label">12th:</span>
+          <span class="value">
+            Board/University: {{ student.twelfthBoard }}, Stream: {{ student.twelfthStream }},
+            Marks: {{ student.twelfthObtainedMarks }}/{{ student.twelfthTotalMarks }} ({{ (student.twelfthObtainedMarks / student.twelfthTotalMarks * 100).toFixed(2) }}%)
+          </span>
+        </div>
+        
+        <div class="preview-row">
+          <span class="label">Graduation:</span>
+          <span class="value">
+            Board/University: {{ student.graduationBoard }}, Stream: {{ student.graduationStream }},
+            Marks: {{ student.graduationObtainedMarks }}/{{ student.graduationTotalMarks }} ({{ (student.graduationObtainedMarks / student.graduationTotalMarks * 100).toFixed(2) }}%)
+          </span>
+        </div>
+      </div>
+      
+      <div class="button-container">
+        <button class="go-back-btn" (click)="onClose()">GO BACK</button>
+        <button class="submit-btn" (click)="onSubmit()">SUBMIT</button>
+      </div>
+    </div>
+  </div>
